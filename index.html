@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UG Music Platform</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Genos:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       1. НАСТРОЙКА ЦВЕТОВ И ШРИФТОВ
+       ========================================================= */
+    :root {
+      /* Основные цвета сайта */
+      --bg-color: #0b0b0e;          /* Цвет фона сайта */
+      --card-bg: #b298dc;           /* Цвет карточек */
+      --accent-color: #b298dc;      /* Главный яркий цвет (кнопки, акценты) */
+      --text-color: #ffffff;        /* Цвет главного текста */
+      --text-muted: #8a8a9e;        /* Цвет второстепенного текста */
+      
+      /* Шрифты */
+      --font-main: 'Genos', sans-serif;       /* Шрифт для обычного текста */
+      --font-heading: 'Boldonse', sans-serif; /* Твой новый шрифт Boldonse */
+    }
+
+    /* Базовые сбросы */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+    }
+
+    /* Все заголовки теперь используют шрифт Boldonse */
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================================================
+       2. ШАПКА СAЙТА (HEADER)
+       ========================================================= */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #111116;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-family: var(--font-heading);
+    }
+
+    .logo span {
+      color: var(--accent-color);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-color);
+    }
+
+    /* =========================================================
+       3. ГЛАВНЫЙ БАННЕР (HOME / HERO)
+       ========================================================= */
+    .home-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-tag {
+      background: var(--accent-color);
+      color: #000;
+      font-size: 0.8rem;
+      font-family: var(--font-heading);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      line-height: 1.1;
+    }
+
+    .hero-description {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+    }
+
+    .hero-image-box img {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* =========================================================
+       4. ОСНОВНОЙ КОНТЕНТ (MAIN)
+       ========================================================= */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 40px 60px 40px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--accent-color);
+      padding-left: 12px;
+    }
+
+    /* Кнопки Категорий */
+    .categories-list {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .category-btn.active, .category-btn:hover {
+      background: var(--accent-color);
+      color: #000;
+      border-color: var(--accent-color);
+    }
+
+    /* Сетка Треков (Хиты Дня) */
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .track-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .track-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+    }
+
+    .track-cover {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .track-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .track-artist {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .play-btn {
+      width: 100%;
+      padding: 8px 0;
+      background: transparent;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .play-btn:hover {
+      background: var(--accent-color);
+      color: #000;
+    }
+
+    /* =========================================================
+       5. ПОДВАЛ (FOOTER)
+       ========================================================= */
+    .footer {
+      background-color: #070709;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 30px 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer p {
+      margin-bottom: 8px;
+    }
+
+    /* Адаптивность для мобильных */
+    @media (max-width: 768px) {
+      .home-hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      .header, .home-hero, .main-content {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ШАПКА (HEADER) -->
+  <header class="header">
+    <div class="logo">UNDERGROUND<span>VAULT</span></div>
+    
+    <ul class="nav-links">
+      <li><a href="#home">Главная</a></li>
+      <li><a href="#categories">Категории</a></li>
+      <li><a href="#hits">Хиты Дня</a></li>
+    </ul>
+  </header>
+
+  <!-- ПРИВЕТСТВЕННЫЙ БЛОК (HOME / HERO) -->
+  <section class="home-hero" id="home">
+    <div class="hero-text">
+      <span class="hero-tag">SOUNDS FRESH</span>
+      <h1 class="hero-title">АНДЕРГРАУНД ХИТЫ ДНЯ</h1>
+      <p class="hero-description">
+        Эксклюзивная подборка треков от новых артистов, Bleood, Osamason, Playboi Carti и рэйдж-сцены. NO MAINSTREAM
+      </p>
+    </div>
+
+    <div class="hero-image-box">
+      <img src="https://i.ytimg.com/vi/nASrOb3fSos/sddefault.jpg" alt="Underground Music">
+    </div>
+  </section>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ (MAIN) -->
+  <main class="main-content">
+
+    <!-- Раздел Категорий -->
+    <section id="categories">
+      <h2 class="section-title">Категории</h2>
+      
+      <div class="categories-list">
+        <button class="category-btn active">All</button>
+        <button class="category-btn">Underground</button>
+        <button class="category-btn">Opium / Rage</button>
+        <button class="category-btn">Pluggnb</button>
+        <button class="category-btn">New Wave</button>
+      </div>
+    </section>
+
+    <!-- Раздел Хиты Дня -->
+    <section id="hits">
+      <h2 class="section-title">Хиты Дня (Underground Only)</h2>
+
+      <div class="tracks-grid">
+
+        <!-- ТРЕК 1 -->
+        <div class="track-card">
+          <img class="track-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB9YMGfrUmCZPgqJ64a3BSYnh8Wqv3vZiJ4MjujmOGySfVQp-7rH9ILiU&s=10" alt="Cover">
+          <div class="track-title">Kills</div>
+          <div class="track-artist">OsamaSon</div>
+          <button class="play-btn" onclick="playAudio('https://open.spotify.com/track/77ipBv6VTnz7UewTIVScho?si=de5ec403bea04de1')">Слушать</button>
+        </div>
+
+        <!-- ТРЕК 2 -->
+        <div class="track-card">
+          <img class="track-cover" src="https://i.scdn.co/image/ab67616d0000b273509546493dd98b154da0e8b2" alt="Cover">
+          <div class="track-title">Angie`s Vampire</div>
+          <div class="track-artist">Predayed</div>
+          <button class="play-btn" onclick="playAudio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Слушать</button>
+        </div>
+
+        <!-- ТРЕК 3 -->
+        <div class="track-card">
+          <img class="track-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESvp6hJhMt8NbRXQqFUOnNSYIWiTvg-dNpo-vB7WAL48cU-7a7-C7UIB_&s=10" alt="Cover">
+          <div class="track-title">Vivienne Westwood</div>
+          <div class="track-artist">Playboi Carti</div>
+          <button class="play-btn" onclick="playAudio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Слушать</button>
+        </div>
+
+        <!-- ТРЕК 4 -->
+        <div class="track-card">
+          <img class="track-cover" src="https://i1.sndcdn.com/avatars-kxJrCV1i4H9HceFF-aS2j5g-t240x240.jpg" alt="Cover">
+          <div class="track-title">I <3 seals</div>
+          <div class="track-artist">Bleood</div>
+          <button class="play-btn" onclick="playAudio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">Слушать</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ПОДВАЛ (FOOTER) -->
+  <footer class="footer">
+    <p>&copy; 2026 UNDERGROUND VAULT. Работаем братья</p>
+    <p>Создано для настоящих ценителей андеграунд сцены.</p>
+  </footer>
+
+  <script>
+    let currentAudio = null;
+
+    function playAudio(url) {
+      if (currentAudio) {
+        currentAudio.pause();
+      }
+      currentAudio = new Audio(url);
+      currentAudio.play();
+    }
+  </script>
+<!-- Безопасная кнопка смены темы -->
+<button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">☀️</button>
+
+<style>
+    .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: #1e1e24;
+        border: 2px solid #33333d;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        transition: transform 0.3s ease;
+    }
+    .theme-toggle:hover {
+        transform: scale(1.1);
+    }
+    html[data-theme="blue-light"] body {
+        filter: brightness(0.95) hue-rotate(180deg);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'blue-light') {
+            htmlEl.setAttribute('data-theme', 'blue-light');
+            toggleBtn.textContent = '🌙';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const current = htmlEl.getAttribute('data-theme');
+            if (current === 'blue-light') {
+                htmlEl.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.textContent = '☀️';
+            } else {
+                htmlEl.setAttribute('data-theme', 'blue-light');
+                localStorage.setItem('theme', 'blue-light');
+                toggleBtn.textContent = '🌙';
+            }
+        });
+    });
+</script>
+</body>
+</html>
